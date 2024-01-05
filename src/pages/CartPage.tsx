@@ -1,12 +1,10 @@
 import { useAppSelector } from "../store/store";
 import { useAppDispatch } from "../store/store"
 import { removeCart } from "../store/cartSlice";
-import { useState } from "react";
 
 function CartPage(): JSX.Element {
   const carts = useAppSelector((state) => state.cart.items);
   const dispatch = useAppDispatch();
-  const [isExist, setIsExist] = useState<boolean>(false);
 
   if(carts.length === 0) {
     return (
@@ -33,7 +31,12 @@ function CartPage(): JSX.Element {
           </li>
         ))}
       </ul>
-        <button className="w-1/12 h-8 mx-auto rounded-xl bg-sky-500 px-3 hover:scale-110 transition-all">Checkout</button>
+      <div>
+        <p className="text-center mt-6">Total Price : {carts.reduce((total, cart) => total + cart.price * cart.quantity, 0)}$</p>
+      </div>
+        <div className="w-2/12 mx-auto my-8">
+          <button className="w-full h-8 mx-auto rounded-xl bg-sky-500 px-3 hover:scale-110 transition-all">Checkout</button>
+        </div>
     </div>
   );
 }
